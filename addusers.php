@@ -1,5 +1,8 @@
 <?php
 include_once("connection.php");
+array_map("htmlspecialchars", $_POST);
+
+
 print_r($_POST);
 echo($_POST["forename"]);
 switch($_POST["role"]){
