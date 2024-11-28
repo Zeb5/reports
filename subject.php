@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Page title</title>
+    <title>Subjects</title>
+        
     </head>
     <body>
-        <form action="addusers.php" method="POST">
-            Subject Name:<input type="text" name="subjname"><br>
-            Teacher:<input type="text" name="Teach"><br>
+        <form action="addsubject.php" method="post">
+            Subject name:<input type="text" name="subjectname"><br>
+            Teacher:<input type="text" name="teacher"><br>
+            
             <input type="submit" value="Add Subject">
         </form>
     </body>
