@@ -1,0 +1,16 @@
+ALTER TABLE tblsubject
+ADD UNIQUE KEY unique_subjectname_teacher (subjectname, teacher);
+
+
+INSERT INTO `tblusers` (`gender`, `surname`, `forename`, `password`, `house`, `year`, `role`) VALUES
+('M', 'Blackburn', 'Zebedee', 'verysecure!', 'Sidney', 12, 0),
+
+INSERT INTO `tblsubject` (`subjectname`, `teacher`) VALUES
+('Computer Science', 'Mr Cunniffe'),
+
+
+
+
+<?php
+            echo("<input type='hidden' name='subjectid' value='" .$row["subjectid"]. "'>");
+            ?>

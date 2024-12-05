@@ -19,7 +19,7 @@
                         }
                 ?>
             </select>
-            <input type="submit" value="Next">
+            <input type="submit">
         </form>
     </body>
 </html>

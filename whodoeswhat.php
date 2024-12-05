@@ -6,9 +6,9 @@
     <body>
         <?php
             include_once("connection.php");
-            $stmt = $conn->prepare("SELECT tblsubject.subjectname as sn,
-            tblusers.forename as fn,
-            tblusers.surname as ln
+            $stmt = $conn->prepare("SELECT tblsubject.subjectname AS sn,
+            tblusers.forename AS fn,
+            tblusers.surname AS ln
             FROM tblpupilstudies
             INNER JOIN tblsubject ON tblsubject.subjectid=tblpupilstudies.subjectid
             INNER JOIN tblusers ON tblusers.userid=tblpupilstudies.userid");
