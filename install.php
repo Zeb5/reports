@@ -1,17 +1,17 @@
 <?php
 include_once("connection.php");
 $stmt = $conn->prepare("DROP TABLE IF EXISTS tblusers;
-CREATE TABLE tblusers
+CREATE TABLE tblusers 
 (userid INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-gender VARCHAR(1) NOT NULL,
 surname VARCHAR(20) NOT NULL,
 forename VARCHAR(20) NOT NULL,
+username VARCHAR(20) NOT NULL,
 password VARCHAR(20) NOT NULL,
+gender VARCHAR(1) NOT NULL,
 house VARCHAR(20) NOT NULL,
 year INT(2) NOT NULL,
-role TINYINT(1));
-ALTER TABLE `tblusers`
-ADD UNIQUE KEY `surname_forename` (`surname`,`forename`);");
+role TINYINT(1),
+UNIQUE KEY username_userid (username, userid));");
 $stmt->execute();
 $stmt->closeCursor();
 echo"<br>tblusers created";
@@ -19,7 +19,7 @@ echo"<br>tblusers created";
 $stmt = $conn->prepare("DROP TABLE IF EXISTS tblsubject;
 CREATE TABLE tblsubject
 (subjectid INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-subjectname VARCHAR(20) NOT NULL,
+subjectname VARCHAR(30) NOT NULL,
 teacher VARCHAR(20) NOT NULL);
 ALTER TABLE `tblsubject`
 ADD UNIQUE KEY `subjectname_teacher` (`subjectname`,`teacher`);");

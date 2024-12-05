@@ -12,5 +12,5 @@ INSERT INTO `tblsubject` (`subjectname`, `teacher`) VALUES
 
 
 <?php
-            echo("<input type='hidden' name='subjectid' value='" .$row["subjectid"]. "'>");
-            ?>
+echo("<input type='hidden' name='subjectid' value='" .$row["subjectid"]. "'>");
+?>

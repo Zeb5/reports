@@ -1,8 +1,8 @@
 <?php
-//header('Location:pupilstudies.php');
+header('Location:select_pupil.php');
 include_once('connection.php');
 array_map("htmlspecialchars", $_POST);
-print_r($_POST);
+//print_r($_POST);
 
 //Array ( [subjectid] => 40 [userid] => 463 [classposition] => 2 [grade] => A [exammark] => 123 [comment] => test )
 
