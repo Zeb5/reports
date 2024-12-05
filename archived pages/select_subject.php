@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,6 +10,7 @@
             Subject:
             <select name="subjectid">
                 <?php
+                /*
                     array_map("htmlspecialchars", $_POST);
                     //print_r($_POST);
                     include_once("connection.php");
@@ -21,10 +23,13 @@
                             //echo($row["forename"]." ".$row["subjectname"]."<br>");
                             echo("<option value=".$row["subjectid"].">".$row["subjectname"]."</option>");
                         }
+                */
                 ?>
             </select>
             <?php
-                echo("<input type='hidden' name='userid' value='" .$_POST['student']. "'>");
+            /*
+                echo("<input type='hidden' name='student' value='" .$_POST['student']. "'>");
+            */
             ?>
             <br>
             Class Position:<input type="number" name="classposition" min="1">
@@ -45,3 +50,4 @@
         </form>
     </body>
 </html>
+-->

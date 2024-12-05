@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,8 +8,9 @@
         <h1>Select a Pupil</h1>
         <form method="POST" action="select_subject.php">
             <label for="userid">Select Pupil:</label>
-            <select name = "student">
+            <select name="student">
                 <?php
+                /*
                     include_once("connection.php");
                     $stmt = $conn->prepare("SELECT * FROM tblusers WHERE role=0 ORDER BY surname ASC");
                     $stmt->execute();
@@ -17,9 +19,11 @@
                             //print_r($row);
                             echo("<option value=".$row["userid"].">".$row["surname"].", ".$row["forename"]."</option>");
                         }
+                */
                 ?>
             </select>
             <input type="submit">
         </form>
     </body>
 </html>
+-->
