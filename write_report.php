@@ -39,7 +39,7 @@
             <br>
             Exam Mark:<input type="number" name="exammark" min="0">
             <br>
-            Comment:<br><textarea name="comment" rows="6" cols="75"></textarea>
+            Comment:<br><textarea name="comment" rows="8" cols="62"></textarea>
             <br>
             <input type="submit" value="Submit">
         </form>

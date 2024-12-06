@@ -1,6 +1,5 @@
-// This function is triggered when the user selects a pupil from the dropdown
+// Function triggered when the user selects a pupil from the dropdown
 function fetchSubjects() {
-    // Get the ID of the selected pupil
     var pupilid = document.getElementById("student").value;
     console.log("Selected pupil ID: ", pupilid); // Debug selected ID
         // Check if a pupil has been selected
@@ -34,6 +33,6 @@ function fetchSubjects() {
     } else {
         console.log("No pupil selected.");
         // If no pupil is selected, clear the subject selection area
-        document.getElementById("subject_select").innerHTML = "";
+        document.getElementById("subject_select").innerHTML = "--subjects--";
     }
 }
