@@ -41,26 +41,24 @@ $stmt->execute();
 $stmt->closeCursor();
 echo"<br>tblpupilstudies created";
 
-$stmt = $conn->prepare("
-DROP VIEW IF EXISTS viewteacher;
-        CREATE VIEW viewteacher AS
-        SELECT 
-            tblusers.userid AS teacherid,
-            tblusers.surname AS surname,
-            tblusers.forename AS forename,
-            tblusers.username AS username,
-            tblusers.password AS password,
-            tblusers.gender AS gender,
-            tblusers.house AS house,
-            tblusers.year AS year,
-            tblusers.role AS role,
-            tblusers.title AS title
-        FROM tblusers
-        WHERE tblusers.role = 1
-        WITH CASCADED CHECK OPTION;
-    ");
-    $stmt->execute();
-    $stmt->closeCursor();
-    echo "<br>viewteacher created";
+$stmt = $conn->prepare("DROP VIEW IF EXISTS viewteacher;
+CREATE VIEW viewteacher AS
+SELECT 
+tblusers.userid AS teacherid,
+tblusers.surname AS surname,
+tblusers.forename AS forename,
+tblusers.username AS username,
+tblusers.password AS password,
+tblusers.gender AS gender,
+tblusers.house AS house,
+tblusers.year AS year,
+tblusers.role AS role,
+tblusers.title AS title
+FROM tblusers
+WHERE tblusers.role = 1
+WITH CASCADED CHECK OPTION;");
+$stmt->execute();
+$stmt->closeCursor();
+echo "<br>viewteacher created";
 
 ?>
