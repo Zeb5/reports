@@ -16,129 +16,104 @@ echo("<input type='hidden' name='subjectid' value='" .$row["subjectid"]. "'>");
 ?>
 
 
-// This function is triggered when the user selects a pupil from the dropdown
-function fetchSubjects() {
-    // Get the ID of the selected pupil
-    var pupilId = document.getElementById("student").value;
-
-    // Check if a pupil has been selected
-    if (pupilId != "") {
-        // Create a new XMLHttpRequest object to handle the POST request
-        var xhr = new XMLHttpRequest();
-
-        // Open a POST request to the 'get_subjects.php' script
-        xhr.open("POST", "get_subjects.php", true);
-
-        // Set the Content-Type header to send data as form data (URL encoded)
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        // Define what happens when the request completes
-        xhr.onload = function() {
-            // If the request is successful, insert the returned data into the page
-            if (xhr.status == 200) {
-                // Insert the HTML for the subject dropdown into the 'subject_select' div
-                document.getElementById("subject_select").innerHTML = xhr.responseText;
-            } else {
-                console.error("Error in AJAX request:", xhr.status, xhr.statusText);
-            }
-        };
-
-        // Handle potential errors
-        xhr.onerror = function() {
-            console.error("Request failed");
-        };
-
-        // Send the POST request with the pupil ID in the request body
-        xhr.send("student=" + pupilId);
-    } else {
-        // If no pupil is selected, clear the subject selection area
-        document.getElementById("subject_select").innerHTML = "";
-    }
-}
-
-
-<?php
-// Check if the 'student' parameter is set in the POST request
-if (isset($_POST['student'])) {
-    // Retrieve the selected pupil's ID from the POST request
-    $selectedUserId = $_POST['student'];
-
-    // Include the database connection
-    include_once("connection.php");
-
-    // Prepare the SQL query to fetch the subjects for the selected pupil
-    $stmt = $conn->prepare("SELECT ts.subjectname, ts.subjectid 
-                            FROM tblsubject AS ts 
-                            INNER JOIN tblpupilstudies AS tps 
-                            ON ts.subjectid = tps.subjectid 
-                            WHERE tps.userid = :selecteduserid");
-
-    // Bind the pupil ID to the query parameter
-    $stmt->bindParam(':selecteduserid', $selectedUserId);
-
-    // Execute the query
-    $stmt->execute();
-
-    // Generate the HTML for the subject dropdown
-    echo '<label for="subjectid">Select Subject:</label>';
-    echo '<select name="subjectid" required>';
-    echo '<option value="">--Select Subject--</option>';
-
-    // Fetch the subjects and populate the dropdown options
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo '<option value="' . $row['subjectid'] . '">' . $row['subjectname'] . '</option>';
-    }
-
-    echo '</select>';
-}
-?>
-
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <title>Select Subject</title>
+        <title>Page Title</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
-        <h1>Select a Subject for the Pupil</h1>
-        <form method="POST" action="insert_pupil_study.php">
-            Subject:
-            <select name="subjectid">
-                <?php
-                    array_map("htmlspecialchars", $_POST);
-                    //print_r($_POST);
-                    include_once("connection.php");
-                    $stmt = $conn->prepare("SELECT tu.forename,ts.subjectname,ts.subjectid FROM tblusers AS tu INNER JOIN tblpupilstudies AS tps ON tu.userid = tps.userid INNER JOIN tblsubject AS ts ON tps.subjectid = ts.subjectid WHERE tu.userid = :selecteduserid;");
-                    $stmt->bindParam(':selecteduserid', $_POST["student"]);
-                    $stmt->execute();
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
-                        {
-                            //print_r($row);
-                            //echo($row["forename"]." ".$row["subjectname"]."<br>");
-                            echo("<option value=".$row["subjectid"].">".$row["subjectname"]."</option>");
-                        }
-                ?>
-            </select>
-            <?php
-                echo("<input type='hidden' name='userid' value='" .$_POST['student']. "'>");
-            ?>
+        <form action="addusers.php" method="POST">
+            First name:<input type="text" name="forename"><br>
+            Last name:<input type="text" name="surname"><br>
+            Password:<input type="password" name="passwd"><br>
+            House:<input type="text" name="house"><br>
+            Year:<input type="text" name="year"><br>
+            <!--Creates a drop down list-->
+            Gender:<select name="gender">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
             <br>
-            Class Position:<input type="number" name="classposition" min="1">
-            <br>
-            Grade:<input type="radio" name="grade" value="A*" checked> A&#42;
-            <input type="radio" name="grade" value="A" checked> A
-            <input type="radio" name="grade" value="B" checked> B
-            <input type="radio" name="grade" value="C" checked> C
-            <input type="radio" name="grade" value="D" checked> D
-            <input type="radio" name="grade" value="F" checked> F
-            <input type="radio" name="grade" value="U" checked> U
-            <br>
-            Exam Mark:<input type="number" name="exammark" min="0">
-            <br>
-            Comment:<br><textarea name="comment" rows="6" cols="75"></textarea>
-            <br>
-            <input type="submit">
+            <!--Next 3 lines create a radio button which we can use to select the user role-->
+            <input type="radio" name="role" value="Pupil" checked> Pupil<br>
+            <input type="radio" name="role" value="Teacher"> Teacher<br>
+            <input type="radio" name="role" value="Admin"> Admin<br>
+            <input type="submit" value="Add User">
         </form>
+        <h2>Current Users:</h2>
+        <?php
+            include_once("connection.php");
+            $stmt = $conn->prepare("SELECT tu.forename, tu.surname, tu.role FROM tblusers AS tu");
+            $stmt->execute();
+
+            echo "<table id='userTable'>";
+            echo "<thead><tr>";
+            echo "<th onclick='sortTable(0)'>First Name</th>";
+            echo "<th onclick='sortTable(1)'>Last Name</th>";
+            echo "<th onclick='sortTable(2)'>Role</th>";
+            echo "</tr></thead><tbody>";
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $role = '';
+                switch ($row["role"]) {
+                    case 0:
+                        $role = 'Pupil';
+                        break;
+                    case 1:
+                        $role = 'Teacher';
+                        break;
+                    case 2:
+                        $role = 'Admin';
+                        break;
+                    default:
+                        $role = 'Unknown';
+                }
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["forename"]) . "</td>";
+                echo "<td>" . htmlspecialchars($row["surname"]) . "</td>";
+                echo "<td>" . htmlspecialchars($role) . "</td>";
+                echo "</tr>";
+            }
+
+            echo "</tbody></table>";
+        ?>
+        
+        <script>
+            function sortTable(columnIndex) {
+                const table = document.getElementById("userTable");
+                const rows = Array.from(table.rows).slice(1); // Skip header row
+                const isAscending = table.dataset.sortOrder !== 'asc';
+
+                rows.sort((rowA, rowB) => {
+                    const cellA = rowA.cells[columnIndex].innerText.toLowerCase();
+                    const cellB = rowB.cells[columnIndex].innerText.toLowerCase();
+
+                    if (cellA < cellB) return isAscending ? -1 : 1;
+                    if (cellA > cellB) return isAscending ? 1 : -1;
+                    return 0;
+                });
+
+                table.dataset.sortOrder = isAscending ? 'asc' : 'desc';
+
+                const tbody = table.querySelector("tbody");
+                rows.forEach(row => tbody.appendChild(row));
+            }
+        </script>
     </body>
 </html>

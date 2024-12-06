@@ -3,6 +3,7 @@ include_once("connection.php");
 $stmt = $conn->prepare("DROP TABLE IF EXISTS tblusers;
 CREATE TABLE tblusers 
 (userid INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(10) NOT NULL,
 surname VARCHAR(20) NOT NULL,
 forename VARCHAR(20) NOT NULL,
 username VARCHAR(20) NOT NULL,
