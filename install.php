@@ -21,9 +21,7 @@ $stmt = $conn->prepare("DROP TABLE IF EXISTS tblsubject;
 CREATE TABLE tblsubject
 (subjectid INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 subjectname VARCHAR(30) NOT NULL,
-teacher VARCHAR(20) NOT NULL);
-ALTER TABLE `tblsubject`
-ADD UNIQUE KEY `subjectname_teacher` (`subjectname`,`teacher`);");
+teacher VARCHAR(20) NOT NULL);");
 $stmt->execute();
 $stmt->closeCursor();
 echo"<br>tblsubject created";
