@@ -42,6 +42,9 @@
             <input type="radio" name="role" value="Teacher"> Teacher<br>
             <input type="radio" name="role" value="Admin"> Admin<br>
 
+            <?php
+
+            ?>
             <!-- Submit button to add the user -->
             <input type="submit" value="Add User">
         </form>
